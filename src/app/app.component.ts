@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NasaService } from './nasa.service';
+import { Nasa } from './models/nasa.model';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +12,14 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'nasa_challenge';
+
+  nasaPicture!: Nasa;
+
+  constructor(private nasaService: NasaService) { }
+  
+  ngOnInit(): void {
+    this.nasaService.getImageOfTheDay().subscribe(dataFromApi => {
+      this.nasaPicture = dataFromApi;
+    })
+  }
 }
